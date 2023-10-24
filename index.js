@@ -9,6 +9,8 @@ const token = process.env["bot_token"] || config.bot_token;
 require("http")
 require("https")
 
+require('./keep_alive.js') // Для UpTimeRobot
+
 // Create a bot that uses 'polling' to fetch new updates
 // { command: '/replace_file', description: 'Поменять шаблон'},
 
