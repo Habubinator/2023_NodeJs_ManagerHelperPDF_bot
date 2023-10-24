@@ -63,7 +63,7 @@ bot.on('message', (msg) => {
     switch(text){
       case '/start':
         stopState(chatId)
-        return bot.sendMessage(chatId, 'Это бот для упрощения менеджмента и ускорения ввода данных для  PDF документов \n/new - Создать новый документ');
+        return bot.sendMessage(chatId, 'Это бот для упрощения менеджмента и ускорения ввода данных для  PDF документов \n/new - Создать новый документ \n/result - Вывести документ после создания');
       case '/change':
         stopState(chatId)
         return bot.sendMessage(chatId, 'В разработке');
