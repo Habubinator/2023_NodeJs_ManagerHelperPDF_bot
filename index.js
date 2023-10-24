@@ -2,7 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 process.env["NTBA_FIX_350"] = 1;
 
 // replace the value below with the Telegram token you receive from @BotFather (token in config file)
-const config = require('./config.json')
+// const config = require('./config.json')
 const token = process.env["bot_token"] || config.bot_token;
 
 // Визов мережевих помилок при помилках телеграму
