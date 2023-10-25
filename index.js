@@ -1,5 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 process.env["NTBA_FIX_350"] = 1;
+process.env["NTBA_FIX_319"] = 1;
 
 // replace the value below with the Telegram token you receive from @BotFather (token in config file)
 // const config = require('./config.json')
@@ -88,7 +89,7 @@ bot.on('message', (msg) => {
             if (err) {console.error("Error:", err);}
           });
           return bot.sendDocument(chatId, userResultMap.get(chatId)+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
-            console.log("catched")
+            console.error("Error:", err)
           })
         } catch (error) {
           return bot.sendMessage(chatId, 'Вы ещё не создавали документ /new для создания нового документа',{reply_markup: {remove_keyboard: true}});
