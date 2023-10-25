@@ -10,6 +10,7 @@ require("http")
 require("https")
 
 const fs = require("fs"); // Для перевірки чи існує файл
+const ncp = require('ncp').ncp;
 
 require('./keep_alive.js') // Для UpTimeRobot
 
@@ -83,8 +84,8 @@ bot.on('message', (msg) => {
       case '/result':
         stopState(chatId)
         try {
-          fs.copyFile( "./result"+chatId+".pdf", userResultMap.get(chatId)+".pdf",fs.constants.COPYFILE_FICLONE_FORCE, (err) => {
-            if (err) {console.log("Error Found:", err);}
+          ncp('./result' + chatId + '.pdf', userResultMap.get(chatId) + '.pdf', (err) => {
+            if (err) {console.error("Error:", err);}
           });
           return bot.sendDocument(chatId, userResultMap.get(chatId)+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
             console.log("catched")
