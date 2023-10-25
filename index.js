@@ -74,12 +74,10 @@ bot.on('message', (msg) => {
     switch(text){
       case '/start':
         stopState(chatId)
-        return bot.sendMessage(chatId, 'Это бот для упрощения менеджмента и ускорения ввода данных для  PDF документов \n/new - Создать новый документ \n/result - Вывести документ после создания');
-      case '/change':
-        stopState(chatId)
-        return bot.sendMessage(chatId, 'В разработке');
+        return bot.sendMessage(chatId, 'Это бот для упрощения менеджмента и ускорения ввода данных для  PDF документов \n/new - Создать новый документ \n/result - Вывести документ после создания', {reply_markup: {remove_keyboard: true}});
       case '/result':
-        return bot.sendDocument(chatId, "./result"+chatId+".pdf", {caption: "Документ сгенерирован успешно!"}).catch(()=>{
+        stopState(chatId)
+        return bot.sendDocument(chatId, "./result"+chatId+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
           console.log("catched")
         })
       case '/new':
@@ -88,7 +86,7 @@ bot.on('message', (msg) => {
         // Break відсутній, бо він відразу запускає ввід даних
       default:
         if(!chats.checkIfChatStateTriggered(chatId)){
-          return bot.sendMessage(chatId, 'Вы не находитесь в процессе создания документа, воспользуйтесь /start для ознакомления с списком комманд');
+          return bot.sendMessage(chatId, 'Вы не находитесь в процессе создания документа, воспользуйтесь /start для ознакомления с списком комманд',{reply_markup: {remove_keyboard: true}});
         }
         checkState(chatId,text)
         break
