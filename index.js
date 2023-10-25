@@ -89,7 +89,7 @@ bot.on('message', (msg) => {
           ncp('./result' + chatId + '.pdf', userResultMap.get(chatId) + '.pdf', (err) => {
             if (err) {console.error("Error:", err);}
           });
-          return bot.sendDocument(chatId, userResultMap.get(chatId)+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
+          return bot.sendDocument(chatId, userResultMap.get(chatId)+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch((err)=>{
             console.error("Error:", err)
           })
         } catch (error) {
