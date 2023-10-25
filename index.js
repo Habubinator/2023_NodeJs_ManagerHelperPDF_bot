@@ -87,7 +87,7 @@ bot.on('message', (msg) => {
           if (error) {isFile = false} else {isFile = true}
         });
         if(isFile){
-          fs.copyFile( "./result"+chatId+".pdf", userResultMap.get(chatId)+".pdf",fs.constants.COPYFILE_FICLONE, (err) => {
+          fs.copyFile( "./result"+chatId+".pdf", userResultMap.get(chatId)+".pdf",fs.constants.COPYFILE_FICLONE_FORCE, (err) => {
             if (err) {console.log("Error Found:", err);}
           });
           return bot.sendDocument(chatId, userResultMap.get(chatId)+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
