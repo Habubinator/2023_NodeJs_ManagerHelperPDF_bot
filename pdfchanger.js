@@ -27,18 +27,20 @@ async function replaceText(inputFileName, outputFileName, replacements) {
   const fields = form.getFields()
   fields.forEach(field => {
     const name = field.getName()
-
+    const change_field = form.getTextField(name)
     // const type = field.constructor.name
     // console.log(`${type}: ${name}`)
 
     // Невеликий костиль
     if(name == "currDate"){
-      form.getTextField(name).setText((new Date()).toLocaleDateString('en-GB'))
+      change_field.setText((new Date()).toLocaleDateString('en-GB'))
+    }else if(name == "id"){
+      change_field.setText("#"+Math.floor(Math.random()*100)+"382472893")
     }else{
-      form.getTextField(name).setText(findReplacement(name))
+      change_field.setText(findReplacement(name))
     }
-    // form.getTextField(name).setFontSize(11);
-    form.getTextField(name).updateAppearances(customFont);
+    // change_field.setFontSize(11);
+    change_field.updateAppearances(customFont);
   })
 
   // ПІСЛЯ ПРАВОК ЦЯ ЧАСТИНА КОДУ НЕ ПОТРІБНА

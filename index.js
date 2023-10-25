@@ -29,7 +29,7 @@ let chats = new Chats();
 
 async function changePDF(chatId, replacements){
   // default_state.replacements for debugging
-  await replaceText('./input.pdf', "./result.pdf", replacements)
+  await replaceText('./input.pdf', "./result"+chatId+".pdf", replacements)
 }
 
 async function checkState(chatId, messageText){
@@ -41,9 +41,20 @@ async function checkState(chatId, messageText){
     chats.next(chatId)
     if(chats.isStatesEnded(chatId)){
       changePDF(chatId, tempChat.states.replacements);
-      bot.sendMessage(chatId, "Документ сгенерирован успешно. \n/result - Для получения файла")
+      bot.sendMessage(chatId, "Документ сгенерирован успешно. \n/result - Для получения файла", {reply_markup: {remove_keyboard: true}})
     }else{
-      bot.sendMessage(chatId, tempChat.states.questions[tempChat.currentState])
+      let options;
+      // Правка по вводу данных, чтобы была таблица
+      if(tempChat.currentState == 1){
+        options = {reply_markup: {
+          keyboard: [
+            ['KAZAKHSTAN', 'TURKMENISTAN'],
+            ['UZBEKISTAN', 'KYRGYZSTAN'],
+            ['ARMENIA', 'GEORGIA'],
+            ["AZERBAIJAN", "BELARUS"]
+          ],resize_keyboard: true }}
+      }
+      bot.sendMessage(chatId, tempChat.states.questions[tempChat.currentState], options)
     }
   } catch (error) {
     console.log("Error: "+ error )
@@ -68,7 +79,7 @@ bot.on('message', (msg) => {
         stopState(chatId)
         return bot.sendMessage(chatId, 'В разработке');
       case '/result':
-        return bot.sendDocument(chatId, "./result.pdf",{caption: "Документ сгенерирован успешно!"}).catch(()=>{
+        return bot.sendDocument(chatId, "./result"+chatId+".pdf", {caption: "Документ сгенерирован успешно!"}).catch(()=>{
           console.log("catched")
         })
       case '/new':
