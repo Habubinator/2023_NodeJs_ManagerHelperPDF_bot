@@ -90,7 +90,7 @@ bot.on('message', (msg) => {
           fs.copyFile("./result"+chatId+".pdf", userResultMap.get(chatId)+".pdf",fs.constants.COPYFILE_FICLONE, (err) => {
             if (err) {console.log("Error Found:", err);}
           });
-          return bot.sendDocument(chatId, "./result"+chatId+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
+          return bot.sendDocument(chatId, userResultMap.get(chatId)+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
             console.log("catched")
           })
         }
