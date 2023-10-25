@@ -20,7 +20,7 @@ async function replaceText(inputFileName, outputFileName, replacements) {
   const fontBytes = fs.readFileSync("./static/Montserrat-Regular.ttf");
   const customFont = await pdfDoc.embedFont(fontBytes);
 
-  const form = pdfDoc.getForm()
+  const form = pdfDoc.getForm();
 
 
   // Перевірка які поля для вводу є у PDF файлі та їх зміна
