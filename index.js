@@ -58,7 +58,8 @@ async function checkState(chatId, messageText){
             ['KAZAKHSTAN', 'TURKMENISTAN'],
             ['UZBEKISTAN', 'KYRGYZSTAN'],
             ['ARMENIA', 'GEORGIA'],
-            ["AZERBAIJAN", "BELARUS"]
+            ["AZERBAIJAN", "BELARUS"],
+            ["TAJIKISTAN"]
           ],resize_keyboard: true }}
       }
       bot.sendMessage(chatId, tempChat.states.questions[tempChat.currentState], options)
