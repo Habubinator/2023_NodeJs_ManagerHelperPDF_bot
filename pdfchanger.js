@@ -35,7 +35,7 @@ async function replaceText(inputFileName, outputFileName, replacements) {
     if(name == "currDate"){
       change_field.setText((new Date()).toLocaleDateString('en-GB'))
     }else if(name == "id"){
-      change_field.setText("#"+Math.floor(Math.random()*100)+"382472893")
+      change_field.setText(Math.floor(Math.random())*100+"382472893")
     }else{
       change_field.setText(findReplacement(name))
     }
