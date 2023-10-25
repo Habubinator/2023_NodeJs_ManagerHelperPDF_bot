@@ -82,12 +82,12 @@ bot.on('message', (msg) => {
         return bot.sendMessage(chatId, 'Это бот для упрощения менеджмента и ускорения ввода данных для  PDF документов \n/new - Создать новый документ \n/result - Вывести документ после создания', {reply_markup: {remove_keyboard: true}});
       case '/result':
         stopState(chatId)
-        let isFile;
-        fs.access("./result"+chatId+".pdf", function(error){
+        let isFile = true;
+        fs.access( "./result"+chatId+".pdf", function(error){
           if (error) {isFile = false} else {isFile = true}
         });
         if(isFile){
-          fs.copyFile("./result"+chatId+".pdf", userResultMap.get(chatId)+".pdf",fs.constants.COPYFILE_FICLONE, (err) => {
+          fs.copyFile( "./result"+chatId+".pdf", userResultMap.get(chatId)+".pdf",fs.constants.COPYFILE_FICLONE, (err) => {
             if (err) {console.log("Error Found:", err);}
           });
           return bot.sendDocument(chatId, userResultMap.get(chatId)+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
