@@ -9,7 +9,11 @@ const token = process.env["bot_token"] || config.bot_token;
 require("http")
 require("https")
 
+const fs = require("fs"); // Для перевірки чи існує файл
+
 require('./keep_alive.js') // Для UpTimeRobot
+
+let userResultMap = new Map();
 
 // Create a bot that uses 'polling' to fetch new updates
 // { command: '/replace_file', description: 'Поменять шаблон'},
@@ -30,6 +34,7 @@ let chats = new Chats();
 async function changePDF(chatId, replacements){
   // default_state.replacements for debugging
   await replaceText('./input.pdf', "./result"+chatId+".pdf", replacements)
+  userResultMap.set(chatId,replacements[0].replace)
 }
 
 async function checkState(chatId, messageText){
@@ -77,9 +82,19 @@ bot.on('message', (msg) => {
         return bot.sendMessage(chatId, 'Это бот для упрощения менеджмента и ускорения ввода данных для  PDF документов \n/new - Создать новый документ \n/result - Вывести документ после создания', {reply_markup: {remove_keyboard: true}});
       case '/result':
         stopState(chatId)
-        return bot.sendDocument(chatId, "./result"+chatId+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
-          console.log("catched")
-        })
+        let isFile;
+        fs.access("./result"+chatId+".pdf", function(error){
+          if (error) {isFile = false} else {isFile = true}
+        });
+        if(isFile){
+          fs.copyFile("./result"+chatId+".pdf", userResultMap.get(chatId)+".pdf",fs.constants.COPYFILE_FICLONE, (err) => {
+            if (err) {console.log("Error Found:", err);}
+          });
+          return bot.sendDocument(chatId, "./result"+chatId+".pdf", {caption: "Документ сгенерирован успешно!", reply_markup: {remove_keyboard: true}}).catch(()=>{
+            console.log("catched")
+          })
+        }
+        return bot.sendMessage(chatId, 'Вы ещё не создавали документ /new для создания нового документа',{reply_markup: {remove_keyboard: true}});
       case '/new':
         stopState(chatId)
         chats.add(chatId)
