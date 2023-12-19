@@ -11,6 +11,8 @@
   "author": "Yevhenii Hudymenko",
   "license": "ISC",
   "dependencies": {
+    "@ironsoftware/ironpdf": "^2023.11.2",
+    "@ironsoftware/ironpdf-engine-windows-x64": "^2023.11.2",
     "@pdf-lib/fontkit": "^1.1.1",
     "ncp": "^2.0.0",
     "node-telegram-bot-api": "^0.63.0",
