@@ -30,11 +30,7 @@ bot.setMyCommands([
 // let default_state = require('./questions.json');
 const { replaceText } = require("./pdfchanger.js");
 
-// Отдельный файл который переносит PDF в картинку
-const { pdfToPic } = require("./pdf-to-pic.js");
-
-// Change in ./pdf-to-pic.js as well
-let defaultFolder = "./pdfs-pngs";
+let defaultFolder = "./pdfs";
 
 // Вынес классы в отдельный файл, отвечают за хранение и доступ к данным
 const { ChatState, Chats } = require("./classes.js");
@@ -63,11 +59,15 @@ async function checkState(chatId, messageText) {
         "Генерируем PDF документ..."
       );
       await changePDF(chatId, tempChat.states.replacements);
-      bot.editMessageText("Переводим из PDF в PNG...", {
-        chat_id: chatId,
-        message_id: tempMessage.message_id,
-      });
-      await pdfToPic(chatId, userResultMap.get(chatId));
+      ncp(
+        defaultFolder + "/result" + chatId + ".pdf",
+        defaultFolder + userResultMap.get(chatId) + ".pdf",
+        (err) => {
+          if (err) {
+            console.error("Error:", err);
+          }
+        }
+      );
       await bot.deleteMessage(chatId, tempMessage.message_id);
       bot.sendMessage(
         chatId,
@@ -126,7 +126,7 @@ bot.on("message", (msg) => {
           return bot
             .sendDocument(
               chatId,
-              defaultFolder + "/" + userResultMap.get(chatId) + ".png",
+              defaultFolder + "/" + userResultMap.get(chatId) + ".pdf",
               {
                 caption: "Документ сгенерирован успешно!",
                 reply_markup: { remove_keyboard: true },
