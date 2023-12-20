@@ -39,7 +39,7 @@ let chats = new Chats();
 async function changePDF(chatId, replacements) {
   // default_state.replacements for debugging
   userResultMap.set(chatId, replacements[0].replace);
-  await replaceText(
+  return await replaceText(
     "./input.pdf",
     defaultFolder + "/result" + chatId + ".pdf",
     replacements
@@ -61,7 +61,7 @@ async function checkState(chatId, messageText) {
       await changePDF(chatId, tempChat.states.replacements);
       ncp(
         defaultFolder + "/result" + chatId + ".pdf",
-        defaultFolder + userResultMap.get(chatId) + ".pdf",
+        defaultFolder + "/" + userResultMap.get(chatId) + ".pdf",
         (err) => {
           if (err) {
             console.error("Error:", err);
