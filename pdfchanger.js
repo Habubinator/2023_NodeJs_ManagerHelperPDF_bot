@@ -32,6 +32,8 @@ async function replaceText(inputFileName, outputFileName, replacements) {
       change_field.setText(
         Math.floor(Math.random() * (999 - 100 + 1)) + 100 + "382472893"
       );
+    } else if (name == "fullName2") {
+      change_field.setText(findReplacement("fullName"));
     } else {
       change_field.setText(findReplacement(name));
     }
