@@ -3,8 +3,7 @@ process.env["NTBA_FIX_350"] = 1;
 process.env["NTBA_FIX_319"] = 1;
 
 // replace the value below with the Telegram token you receive from @BotFather (token in config file)
-// const config = require("./config.json");
-const token = process.env["bot_token"]; // || config.bot_token;
+const token = process.env["bot_token"]
 
 // Визов мережевих помилок при помилках телеграму
 require("http");
